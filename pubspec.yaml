@@ -30,6 +30,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.4
+  # Dependency Injection
+  get_it: ^7.6.7
+  # Functional Programming
+  dartz: ^0.10.1
+  # AWS & GraphQL
+  amplify_flutter: ^1.6.1
+  amplify_api: ^1.6.1
+  # Local Storage
+  hive: ^2.2.3
+  # Equatable for value comparison
+  equatable: ^2.0.5
+  # Internet Connection Checker
+  internet_connection_checker: ^1.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
