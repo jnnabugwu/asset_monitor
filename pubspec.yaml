@@ -35,9 +35,6 @@ dependencies:
   get_it: ^7.6.7
   # Functional Programming
   dartz: ^0.10.1
-  # AWS & GraphQL
-  amplify_flutter: ^1.6.1
-  amplify_api: ^1.6.1
   # Local Storage
   hive: ^2.2.3
   # Equatable for value comparison

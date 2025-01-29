@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:asset_monitor/core/errors/failures.dart';
-import 'package:asset_monitor/features/asset_monitoring/presentation/usecases/get_assets.dart';
-import 'package:asset_monitor/features/asset_monitoring/presentation/usecases/watch_asset.dart';
+import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:bloc/bloc.dart';
+
+import 'package:asset_monitor/core/errors/failures.dart';
 import 'package:asset_monitor/features/asset_monitoring/domain/entities/asset.dart';
-import 'package:asset_monitor/features/asset_monitoring/presentation/usecases/get_asset.dart';
+import 'package:asset_monitor/features/asset_monitoring/domain/usecases/get_asset.dart';
+import 'package:asset_monitor/features/asset_monitoring/domain/usecases/get_assets.dart';
+import 'package:asset_monitor/features/asset_monitoring/domain/usecases/watch_asset.dart';
 
 part 'asset_event.dart';
 part 'asset_state.dart';

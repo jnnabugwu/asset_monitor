@@ -6,7 +6,7 @@ import 'package:asset_monitor/features/asset_monitoring/domain/repositories/asse
 class GetAssets extends UsecaseWithoutParams<List<Asset>> {
   final AssetRepository repository;
   
-  const GetAssets(this.repository);
+  const GetAssets({required this.repository});
 
   @override
   ResultFuture<List<Asset>> call() async {

@@ -7,7 +7,7 @@ import 'package:dartz/dartz.dart';
 class WatchAsset extends StreamUsecaseWithParams<Asset, String> {
   final AssetRepository repository;
   
-  const WatchAsset(this.repository);
+  const WatchAsset({required this.repository});
 
   @override
   Stream<Either<Failure, Asset>> call(String params) {
