@@ -20,3 +20,16 @@ class CacheException extends Equatable implements Exception {
   @override
   List<dynamic> get props => [message, statusCode];
 }
+
+class NetworkException extends Equatable implements Exception {
+  const NetworkException({
+    required this.message,
+    this.statusCode = 'NO_INTERNET_CONNECTION'
+  });
+
+  final String message;
+  final String statusCode;
+
+  @override
+  List<dynamic> get props => [message, statusCode];
+}

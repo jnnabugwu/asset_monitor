@@ -27,3 +27,10 @@ class ServerFailure extends Failure {
   ServerFailure.fromException(ServerException exception)
       : this(message: exception.message, statusCode: exception.statusCode);
 }
+
+class NetworkFailure extends Failure {
+  NetworkFailure({required super.message, required super.statusCode});
+
+  NetworkFailure.fromException(NetworkException exception)
+      : this(message: exception.message, statusCode: exception.statusCode);
+}
