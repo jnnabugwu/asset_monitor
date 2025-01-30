@@ -1,5 +1,6 @@
 import 'package:asset_monitor/features/asset_monitoring/presentation/asset_bloc/asset_bloc.dart';
 import 'package:asset_monitor/features/asset_monitoring/presentation/views/pages/daily_temperature_chart.dart';
+import 'package:asset_monitor/features/asset_monitoring/presentation/views/pages/daily_vibration_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,7 +59,12 @@ class DashboardView extends StatelessWidget {
                 child: Text('No assets found'),
               );
             }
-            return DailyTemperatureChart(assets: state.assets);
+            return Column(
+              children: [
+                DailyTemperatureChart(assets: state.assets),
+                DailyVibrationChart(assets: state.assets)
+              ],
+            );
           }
 
           return const Center(

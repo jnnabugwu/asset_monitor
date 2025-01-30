@@ -3,10 +3,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DailyTemperatureChart extends StatelessWidget {
+class DailyVibrationChart extends StatelessWidget {
   final List<Asset> assets;
 
-  const DailyTemperatureChart({
+  const DailyVibrationChart({
     Key? key,
     required this.assets,
   }) : super(key: key);
@@ -17,23 +17,23 @@ class DailyTemperatureChart extends StatelessWidget {
 //or filtering 
 
   Map<String, double> calculateDailyAverages() {
-    final Map<String, List<double>> temperaturesByDay = {};
+    final Map<String, List<double>> vibrationsByDay = {};
     
     for (var asset in assets) {
       if (asset.temperature != null && asset.lastUpdated != null) {
         final day = DateFormat('MM-dd').format(asset.lastUpdated!);
-        temperaturesByDay.putIfAbsent(day, () => []);
-        temperaturesByDay[day]!.add(asset.temperature!);
+        vibrationsByDay.putIfAbsent(day, () => []);
+        vibrationsByDay[day]!.add(asset.vibration!);
       } else {
-        print('Skipped asset - ID: ${asset.id}, temp: ${asset.temperature}, date: ${asset.lastUpdated}');
+        print('Skipped asset - ID: ${asset.id}, vibration: ${asset.vibration}, date: ${asset.lastUpdated}');
       }
     }
 
     // Calculate averages
     final Map<String, double> averages = {};
-    temperaturesByDay.forEach((day, temperatures) {
-      averages[day] = temperatures.reduce((a, b) => a + b) / temperatures.length;
-      print('Day: $day - Number of readings: ${temperatures.length}, Average: ${averages[day]}');
+    vibrationsByDay.forEach((day, vibrations) {
+      averages[day] = vibrations.reduce((a, b) => a + b) / vibrations.length;
+      print('Day: $day - Number of readings: ${vibrations.length}, Average: ${averages[day]}');
     });
 
     return Map.fromEntries(
@@ -52,7 +52,7 @@ class DailyTemperatureChart extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            'Daily Average Temperatures',
+            'Daily Average vibrations',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -66,8 +66,8 @@ class DailyTemperatureChart extends StatelessWidget {
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceAround,
-                maxY: 100, // Maximum temperature
-                minY: 0,   // Minimum temperature
+                maxY: 100, // Maximum vibration
+                minY: 0,   // Minimum vibration
                 barGroups: List.generate(
                   days.length,
                   (index) => BarChartGroupData(
@@ -75,7 +75,7 @@ class DailyTemperatureChart extends StatelessWidget {
                     barRods: [
                       BarChartRodData(
                         toY: averages[days[index]]!,
-                        color: _getTemperatureColor(averages[days[index]]!),
+                        color: _getVibrationColor(averages[days[index]]!),
                         width: 20,
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(4),
@@ -112,7 +112,7 @@ class DailyTemperatureChart extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '${value.toInt()}°F',
+                            '${value.toInt()}Hz',
                             style: const TextStyle(fontSize: 12),
                           ),
                         );
@@ -136,10 +136,10 @@ class DailyTemperatureChart extends StatelessWidget {
     );
   }
 
-  Color _getTemperatureColor(double temperature) {
+  Color _getVibrationColor(double temperature) {
     if (temperature > 85) {
       return Colors.red;
-    } else if (temperature > 75) {
+    } else if (temperature > 60) {
       return Colors.orange;
     }
     return Colors.green;
