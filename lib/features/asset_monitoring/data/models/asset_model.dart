@@ -1,31 +1,18 @@
-
+import 'package:asset_monitor/features/asset_monitoring/data/models/asset_status_model.dart';
 import 'package:asset_monitor/features/asset_monitoring/domain/entities/asset.dart';
 import 'package:hive/hive.dart';
 
 part 'asset_model.g.dart';
 
-//Created an adapter for the AssetStatus type from the domain AssetStatus
-@HiveType(typeId: 1)
-class AssetStatusAdapter {
-    @HiveField(0)
-    final AssetStatus status;
-
-    const AssetStatusAdapter(this.status);
-}
-
-
 @HiveType(typeId: 0)
 class AssetModel extends Asset {
-
     @HiveField(0)
     @override
     final String id;
     
-    
     @HiveField(1)
     @override
     final String name;
-    
     
     @HiveField(2)
     @override
@@ -48,19 +35,19 @@ class AssetModel extends Asset {
     final DateTime? lastUpdated;
     
     @HiveField(7)
-    @override
-    final AssetStatus status;
-
-    const AssetModel({
-            required this.id,        
-            required this.name,      
-            this.location,           
-            this.temperature,        
-            this.vibration,
-            this.oilLevel,
-            this.lastUpdated,
-            required this.status,
-        }) : super(                  
+    final AssetStatusModel statusModel;
+  
+    AssetModel({
+        required this.id,        
+        required this.name,      
+        this.location,           
+        this.temperature,        
+        this.vibration,
+        this.oilLevel,
+        this.lastUpdated,
+        AssetStatus status = AssetStatus.normal,
+    }) : statusModel = AssetStatusModel.fromDomain(status),
+        super(                  
             id: id,
             name: name,
             location: location,
@@ -71,7 +58,7 @@ class AssetModel extends Asset {
             status: status,
         );
 
-  factory AssetModel.fromEntity(Asset asset) {
+    factory AssetModel.fromEntity(Asset asset) {
         return AssetModel(
             id: asset.id,
             name: asset.name,
@@ -84,33 +71,36 @@ class AssetModel extends Asset {
         );
     }  
 
-  factory AssetModel.fromJson(Map<String, dynamic> json) {
-    return AssetModel(
-      id: json['id'],
-      name: json['name'],
-      location: json['location'],
-      temperature: json['temperature']?.toDouble(),
-      vibration: json['vibration']?.toDouble(),
-      oilLevel: json['oilLevel']?.toInt(),  
-      lastUpdated: json['lastUpdated'] != null 
-          ? DateTime.parse(json['lastUpdated'])
-          : null,  
-      status: AssetStatus.values.firstWhere(
-        (e) => e.toString() == 'AssetStatus.${json['status'].toLowerCase()}',
-      ),
-    );
-  }
+    factory AssetModel.fromJson(Map<String, dynamic> json) {
+        return AssetModel(
+            id: json['id'],
+            name: json['name'],
+            location: json['location'],
+            temperature: json['temperature']?.toDouble(),
+            vibration: json['vibration']?.toDouble(),
+            oilLevel: json['oilLevel']?.toInt(),  
+            lastUpdated: json['lastUpdated'] != null 
+                ? DateTime.parse(json['lastUpdated'])
+                : null,  
+            status: AssetStatus.values.firstWhere(
+                (e) => e.toString() == 'AssetStatus.${json['status'].toLowerCase()}',
+            ),
+        );
+    }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'location': location,
-      'temperature': temperature,
-      'vibration': vibration,
-      'oilLevel': oilLevel,
-      'lastUpdated': lastUpdated?.toIso8601String(),
-      'status': status.toString().split('.').last.toUpperCase(),
-    };
-  }
+    Map<String, dynamic> toJson() {
+        return {
+            'id': id,
+            'name': name,
+            'location': location,
+            'temperature': temperature,
+            'vibration': vibration,
+            'oilLevel': oilLevel,
+            'lastUpdated': lastUpdated?.toIso8601String(),
+            'status': status.toString().split('.').last.toUpperCase(),
+        };
+    }
+
+    @override
+    AssetStatus get status => statusModel.toDomain();
 }

@@ -20,59 +20,83 @@ class AssetRepositoryImpl implements AssetRepository {
     required this.networkInfo,
   });
 
+
+
   @override
-  ResultFuture<Asset> getAsset(String id) async {
+  ResultFuture<Asset> getAsset(String id) async{
     try {
-      if (await networkInfo.isConnected) {
-        final remoteAsset = await remoteDataSource.getAsset(id);
-        await localDataSource.cacheAsset(remoteAsset);
-        return Right(remoteAsset);
-      } else {
-        final localAsset = await localDataSource.getAsset(id);
-        return Right(localAsset);
-      }
-    } on CacheException {
-      return Left(CacheFailure(message: 'Asset not found', statusCode: 404));
-    } on ServerException {
-      // Try to get from cache if server fails
-      try {
-        final localAsset = await localDataSource.getAsset(id);
-        return Right(localAsset);
+         final localAsset = await localDataSource.getAsset(id);
+         return Right(localAsset);      
       } on CacheException {
-        return Left(CacheFailure(message: 'Asset not found', statusCode: 404));
-      }
-    }
+       return Left(CacheFailure(message: 'Asset not found', statusCode: 404));
+     }
   }
+  // ResultFuture<Asset> getAsset(String id) async {
+  //   try {
+  //     if (await networkInfo.isConnected) {
+  //       final remoteAsset = await remoteDataSource.getAsset(id);
+  //       await localDataSource.cacheAsset(remoteAsset);
+  //       return Right(remoteAsset);
+  //     } else {
+  //       final localAsset = await localDataSource.getAsset(id);
+  //       return Right(localAsset);
+  //     }
+  //   } on CacheException {
+  //     return Left(CacheFailure(message: 'Asset not found', statusCode: 404));
+  //   } on ServerException {
+  //     // Try to get from cache if server fails
+  //     try {
+  //       final localAsset = await localDataSource.getAsset(id);
+  //       return Right(localAsset);
+  //     } on CacheException {
+  //       return Left(CacheFailure(message: 'Asset not found', statusCode: 404));
+  //     }
+  //   }
+  // }
   
    @override
-  ResultFuture<List<Asset>> getAssets() async {
+   ResultFuture<List<Asset>> getAssets() async{
     try {
-      if (await networkInfo.isConnected) {
-        final remoteAssets = await remoteDataSource.getAssets();
-        await localDataSource.cacheAssets(remoteAssets);
-        return Right(remoteAssets);
-      } else {
-        final localAssets = await localDataSource.getAllAssets();
-        return Right(localAssets);
-      }
+      final localAssets = await localDataSource.getAllAssets();
+      print('Length of assets: ${localAssets.length}');
+      return Right(localAssets);
     } on CacheException catch (e) {
       return Left(CacheFailure(
-        message: e.message,
-        statusCode: e.statusCode,
-      ));
-    } on ServerException {
-      // Try to get from cache if server fails
-      try {
-        final localAssets = await localDataSource.getAllAssets();
-        return Right(localAssets);
-      } on CacheException catch (e) {
-        return Left(CacheFailure(
-          message: e.message,
-          statusCode: e.statusCode,
-        ));
-      }
+        message: e.message
+      , statusCode: e.statusCode)
+      );
+      
     }
-  }
+   }
+
+  // ResultFuture<List<Asset>> getAssets() async {
+  //   try {
+  //     if (await networkInfo.isConnected) {
+  //       final remoteAssets = await remoteDataSource.getAssets();
+  //       await localDataSource.cacheAssets(remoteAssets);
+  //       return Right(remoteAssets);
+  //     } else {
+  //       final localAssets = await localDataSource.getAllAssets();
+  //       return Right(localAssets);
+  //     }
+  //   } on CacheException catch (e) {
+  //     return Left(CacheFailure(
+  //       message: e.message,
+  //       statusCode: e.statusCode,
+  //     ));
+  //   } on ServerException {
+  //     // Try to get from cache if server fails
+  //     try {
+  //       final localAssets = await localDataSource.getAllAssets();
+  //       return Right(localAssets);
+  //     } on CacheException catch (e) {
+  //       return Left(CacheFailure(
+  //         message: e.message,
+  //         statusCode: e.statusCode,
+  //       ));
+  //     }
+  //   }
+  // }
   
   @override
   ResultFuture<void> updateAsset(AssetModel asset) async {

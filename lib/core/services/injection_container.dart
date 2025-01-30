@@ -3,6 +3,7 @@ import 'package:asset_monitor/core/network/network_info.dart';
 import 'package:asset_monitor/features/asset_monitoring/data/datasources/asset_local_datasource.dart';
 import 'package:asset_monitor/features/asset_monitoring/data/datasources/asset_remote_datasource.dart';
 import 'package:asset_monitor/features/asset_monitoring/data/models/asset_model.dart';
+import 'package:asset_monitor/features/asset_monitoring/data/models/asset_status_model.dart';
 import 'package:asset_monitor/features/asset_monitoring/data/repositories/asset_repository_impl.dart';
 import 'package:asset_monitor/features/asset_monitoring/domain/repositories/asset_repository.dart';
 import 'package:asset_monitor/features/asset_monitoring/domain/usecases/get_asset.dart';
@@ -70,6 +71,10 @@ Future<void> init() async {
 
   if (!Hive.isAdapterRegistered(0)) {
     Hive.registerAdapter(AssetModelAdapter());
+  }
+
+  if (!Hive.isAdapterRegistered(1)) {
+  Hive.registerAdapter(AssetStatusModelAdapter());
   }
 
   final assetBox = await Hive.openBox<AssetModel>('assets');

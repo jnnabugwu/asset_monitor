@@ -1,5 +1,7 @@
+import 'package:asset_monitor/core/services/csv_import_service.dart';
 import 'package:asset_monitor/core/services/injection_container.dart';
 import 'package:asset_monitor/core/services/router.dart';
+import 'package:asset_monitor/features/asset_monitoring/data/datasources/asset_local_datasource.dart';
 import 'package:asset_monitor/features/asset_monitoring/presentation/asset_bloc/asset_bloc.dart';
 import 'package:asset_monitor/features/asset_monitoring/presentation/views/pages/dashboard.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,19 @@ Future<void> main() async {
   await dotenv.load(fileName: "/Users/jordannnabugwu/Documents/GitHub/asset_monitor/.env");
   await init();
 
+ 
+  
+
+  // Initialize local data source
+  final localDataSource = sl<AssetLocalDataSource>();
+   // Clear existing data
+  await localDataSource.clearAssets();
+
+  // Initialize CSV import service
+  final csvImporter = CsvImportService(localDataSource: localDataSource);
+  
+  // Import data on first launch
+  await csvImporter.importFromAssets('assets/asset_data.csv');
 
 
   runApp(const MyApp());

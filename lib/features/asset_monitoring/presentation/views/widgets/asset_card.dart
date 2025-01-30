@@ -17,19 +17,21 @@ class AssetCard extends StatefulWidget {
 }
 
 class _AssetCardState extends State<AssetCard> {
+ // Store the bloc reference
+  late final AssetBloc _assetBloc;
+
   @override
   void initState() {
     super.initState();
-    // Start watching this specific asset
-    context.read<AssetBloc>().add(
-          StartWatchingAssetEvent(id: widget.asset.id),
-        );
+    _assetBloc = context.read<AssetBloc>();
+    // Use stored reference
+    _assetBloc.add(StartWatchingAssetEvent(id: widget.asset.id));
   }
 
-  @override
+@override
   void dispose() {
-    // Stop watching when card is disposed
-    context.read<AssetBloc>().add(const StopWatchingAssetEvent());
+    // Use stored reference instead of reading from context
+    _assetBloc.add(const StopWatchingAssetEvent());
     super.dispose();
   }
 

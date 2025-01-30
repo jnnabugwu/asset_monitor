@@ -1,4 +1,3 @@
-// lib/features/asset_monitoring/presentation/pages/asset_detail_page.dart
 import 'package:asset_monitor/features/asset_monitoring/domain/entities/asset.dart';
 import 'package:asset_monitor/features/asset_monitoring/presentation/asset_bloc/asset_bloc.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AssetDetailPage extends StatelessWidget {
   static const routeName = '/asset/details';
-  
+
   final String assetId;
 
   const AssetDetailPage({

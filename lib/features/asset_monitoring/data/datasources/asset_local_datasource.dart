@@ -17,16 +17,19 @@ class AssetLocalDataSourceImpl implements AssetLocalDataSource {
 
   AssetLocalDataSourceImpl({required this.assetBox});
 
-  static Future<AssetLocalDataSourceImpl> init() async {
-    // Register adapter
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(AssetModelAdapter());
-    }
-    
-    // Open box
-    final box = await Hive.openBox<AssetModel>('assets');
-    return AssetLocalDataSourceImpl(assetBox: box);
-  }
+  // static Future<AssetLocalDataSourceImpl> init() async {
+  //   // Register adapter
+  //   if (!Hive.isAdapterRegistered(0)) {
+  //     Hive.registerAdapter(AssetModelAdapter());
+  //   }
+  //   //Register adapter for AssetStatus
+  // if (!Hive.isAdapterRegistered(1)) {
+  //   Hive.registerAdapter(AssetStatusAdapter());
+  // }    
+  //   // Open box
+  //   final box = await Hive.openBox<AssetModel>('assets');
+  //   return AssetLocalDataSourceImpl(assetBox: box);
+  // }
 
   @override
   Future<AssetModel> getAsset(String id) async {
@@ -50,10 +53,10 @@ class AssetLocalDataSourceImpl implements AssetLocalDataSource {
 
   @override
   Future<void> cacheAssets(List<AssetModel> assets) async {
-    final Map<String, AssetModel> assetMap = {
-      for (var asset in assets) asset.id: asset
-    };
-    await assetBox.putAll(assetMap);
+    for (var asset in assets) {
+      final compositeKey = '${asset.id}_${asset.lastUpdated?.millisecondsSinceEpoch}';
+      await assetBox.put(compositeKey, asset);
+    }
   }
 
   @override

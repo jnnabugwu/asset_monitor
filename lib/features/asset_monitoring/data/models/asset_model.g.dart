@@ -6,40 +6,6 @@ part of 'asset_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class AssetStatusAdapterAdapter extends TypeAdapter<AssetStatusAdapter> {
-  @override
-  final int typeId = 1;
-
-  @override
-  AssetStatusAdapter read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return AssetStatusAdapter(
-      fields[0] as AssetStatus,
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, AssetStatusAdapter obj) {
-    writer
-      ..writeByte(1)
-      ..writeByte(0)
-      ..write(obj.status);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AssetStatusAdapterAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
-
 class AssetModelAdapter extends TypeAdapter<AssetModel> {
   @override
   final int typeId = 0;
@@ -58,7 +24,6 @@ class AssetModelAdapter extends TypeAdapter<AssetModel> {
       vibration: fields[4] as double?,
       oilLevel: fields[5] as int?,
       lastUpdated: fields[6] as DateTime?,
-      status: fields[7] as AssetStatus,
     );
   }
 
@@ -81,7 +46,7 @@ class AssetModelAdapter extends TypeAdapter<AssetModel> {
       ..writeByte(6)
       ..write(obj.lastUpdated)
       ..writeByte(7)
-      ..write(obj.status);
+      ..write(obj.statusModel);
   }
 
   @override

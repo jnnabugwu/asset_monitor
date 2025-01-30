@@ -1,6 +1,5 @@
-import 'package:asset_monitor/features/asset_monitoring/domain/entities/asset.dart';
 import 'package:asset_monitor/features/asset_monitoring/presentation/asset_bloc/asset_bloc.dart';
-import 'package:asset_monitor/features/asset_monitoring/presentation/views/widgets/asset_card.dart';
+import 'package:asset_monitor/features/asset_monitoring/presentation/views/pages/daily_temperature_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,18 +22,18 @@ class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Asset Monitor'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              context.read<AssetBloc>().add(const GetAssetsEvent());
-            },
-          ),
-        ],
+       // actions: [
+          // IconButton(
+          //   icon: const Icon(Icons.refresh),
+          //   onPressed: () {
+          //     context.read<AssetBloc>().add(const GetAssetsEvent());
+          //   },
+          // ),
+    //    ],
       ),
       body: BlocConsumer<AssetBloc, AssetState>(
         listener: (context, state) {
@@ -48,6 +47,7 @@ class DashboardView extends StatelessWidget {
           }
         },
         builder: (context, state) {
+
           if (state is AssetLoading) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -58,7 +58,7 @@ class DashboardView extends StatelessWidget {
                 child: Text('No assets found'),
               );
             }
-            return _AssetGrid(assets: state.assets);
+            return DailyTemperatureChart(assets: state.assets);
           }
 
           return const Center(
@@ -70,46 +70,46 @@ class DashboardView extends StatelessWidget {
   }
 }
 
-class _AssetGrid extends StatelessWidget {
-  final List<Asset> assets;
+// class _AssetGrid extends StatelessWidget {
+//   final List<Asset> assets;
 
-  const _AssetGrid({
-    Key? key,
-    required this.assets,
-  }) : super(key: key);
+//   const _AssetGrid({
+//     Key? key,
+//     required this.assets,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        context.read<AssetBloc>().add(const GetAssetsEvent());
-      },
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final crossAxisCount = _calculateCrossAxisCount(constraints.maxWidth);
+//   @override
+//   Widget build(BuildContext context) {
+//     return RefreshIndicator(
+//       onRefresh: () async {
+//         context.read<AssetBloc>().add(const GetAssetsEvent());
+//       },
+//       child: LayoutBuilder(
+//         builder: (context, constraints) {
+//           final crossAxisCount = _calculateCrossAxisCount(constraints.maxWidth);
           
-          return GridView.builder(
-            padding: const EdgeInsets.all(16),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              childAspectRatio: 1.5,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-            ),
-            itemCount: assets.length,
-            itemBuilder: (context, index) {
-              return AssetCard(asset: assets[index]);
-            },
-          );
-        },
-      ),
-    );
-  }
+//           return GridView.builder(
+//             padding: const EdgeInsets.all(16),
+//             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//               crossAxisCount: crossAxisCount,
+//               childAspectRatio: 1.5,
+//               crossAxisSpacing: 16,
+//               mainAxisSpacing: 16,
+//             ),
+//             itemCount: assets.length,
+//             itemBuilder: (context, index) {
+//               return AssetCard(asset: assets[index]);
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
 
-  int _calculateCrossAxisCount(double width) {
-    if (width > 1200) return 4;
-    if (width > 800) return 3;
-    if (width > 600) return 2;
-    return 1;
-  }
-}
+//   int _calculateCrossAxisCount(double width) {
+//     if (width > 1200) return 4;
+//     if (width > 800) return 3;
+//     if (width > 600) return 2;
+//     return 1;
+//   }
+// }
