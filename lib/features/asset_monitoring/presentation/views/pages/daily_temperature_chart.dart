@@ -33,7 +33,6 @@ class DailyTemperatureChart extends StatelessWidget {
     final Map<String, double> averages = {};
     temperaturesByDay.forEach((day, temperatures) {
       averages[day] = temperatures.reduce((a, b) => a + b) / temperatures.length;
-      print('Day: $day - Number of readings: ${temperatures.length}, Average: ${averages[day]}');
     });
 
     return Map.fromEntries(

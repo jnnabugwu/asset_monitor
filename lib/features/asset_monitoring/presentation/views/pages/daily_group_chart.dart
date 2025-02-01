@@ -1,39 +1,82 @@
+//So what this needs to have is 
+//Group by machine 
+//take in the machine name 
+//and the the parameter by which to show 
+
 import 'package:asset_monitor/features/asset_monitoring/domain/entities/asset.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DailyVibrationChart extends StatelessWidget {
+class DailyGroupChart extends StatelessWidget {
+  final String machineGroup;
+  final String parameter;
   final List<Asset> assets;
+  const DailyGroupChart(
+    {super.key, required this.machineGroup,
+      required this.parameter, required this.assets}
+      );
 
-  const DailyVibrationChart({
-    Key? key,
-    required this.assets,
-  }) : super(key: key);
+  
+  List<Asset> groupMachine(List<Asset> assets, String machineGroup){
+    var groupedMachines = assets.where(
+      (element) => element.name.contains(machineGroup)
+      ).toList();
+    return groupedMachines;
+  }
 
-//figure out why not getting 7 days 
-//add more graphs oil level and vibration 
-//add groups (cnc, motor, pumps) 
-//or filtering 
+    Map<String, double> calculateDailyAverages(List<Asset> groupedAssets, String parameter){
+      final Map<String, List<num>> parametersByDay = {};    
+    switch (parameter) {
+      case 'temperature':
 
-  Map<String, double> calculateDailyAverages() {
-    final Map<String, List<double>> vibrationsByDay = {};
-    
-    for (var asset in assets) {
-      if (asset.vibration != null && asset.lastUpdated != null) {
-        final day = DateFormat('MM-dd').format(asset.lastUpdated!);
-        vibrationsByDay.putIfAbsent(day, () => []);
-        vibrationsByDay[day]!.add(asset.vibration!);
-      } else {
-        print('Skipped asset - ID: ${asset.id}, vibration: ${asset.vibration}, date: ${asset.lastUpdated}');
-      }
+          for (var asset in groupedAssets) {
+            if (asset.temperature != null && asset.lastUpdated != null) {
+              final day = DateFormat('MM-dd').format(asset.lastUpdated!);
+              parametersByDay.putIfAbsent(day, () => []);
+              parametersByDay[day]!.add(asset.temperature!);
+            } else {
+              print('Skipped asset - ID: ${asset.id}, date: ${asset.lastUpdated}');
+            }
+          }        
+      case 'vibration':
+          for (var asset in groupedAssets) {
+            if (asset.vibration != null && asset.lastUpdated != null) {
+              final day = DateFormat('MM-dd').format(asset.lastUpdated!);
+              parametersByDay.putIfAbsent(day, () => []);
+              parametersByDay[day]!.add(asset.vibration!);
+            } else {
+              print('Skipped asset - ID: ${asset.id}, date: ${asset.lastUpdated}');
+            }
+          } 
+      case 'oilLevel':
+          for (var asset in groupedAssets) {
+            if (asset.oilLevel != null && asset.lastUpdated != null) {
+              final day = DateFormat('MM-dd').format(asset.lastUpdated!);
+              parametersByDay.putIfAbsent(day, () => []);
+              parametersByDay[day]!.add(asset.oilLevel!);
+            } else {
+              print('Skipped asset - ID: ${asset.id}, date: ${asset.lastUpdated}');
+            }
+          } 
+      default:
+          for (var asset in groupedAssets) {
+            if (asset.temperature != null && asset.lastUpdated != null) {
+              final day = DateFormat('MM-dd').format(asset.lastUpdated!);
+              parametersByDay.putIfAbsent(day, () => []);
+              parametersByDay[day]!.add(asset.temperature!);
+            } else {
+              print('Skipped asset - ID: ${asset.id}, date: ${asset.lastUpdated}');
+            }
+          }        
     }
 
+
+    
     // Calculate averages
     final Map<String, double> averages = {};
-    vibrationsByDay.forEach((day, vibrations) {
-      averages[day] = vibrations.reduce((a, b) => a + b) / vibrations.length;
-      print('Day: $day - Number of readings: ${vibrations.length}, Average: ${averages[day]}');
+    parametersByDay.forEach((day, parameter) {
+      averages[day] = parameter.reduce((a, b) => a + b) / parameter.length;
     });
 
     return Map.fromEntries(
@@ -42,18 +85,20 @@ class DailyVibrationChart extends StatelessWidget {
     );
 }
 
+
   @override
-  Widget build(BuildContext context) {
-    final averages = calculateDailyAverages();
+Widget build(BuildContext context) {
+    final averages = calculateDailyAverages(assets,parameter);
     final days = averages.keys.toList();
+    final String title = parameter;
 
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.all(16.0),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Text(
-            'Daily Average Vibrations',
-            style: TextStyle(
+            'Daily Average $title of ${machineGroup}s',
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -75,7 +120,7 @@ class DailyVibrationChart extends StatelessWidget {
                     barRods: [
                       BarChartRodData(
                         toY: averages[days[index]]!,
-                        color: _getVibrationColor(averages[days[index]]!),
+                        color: _getTemperatureColor(averages[days[index]]!),
                         width: 20,
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(4),
@@ -112,7 +157,7 @@ class DailyVibrationChart extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '${value.toInt()}Hz',
+                            '${value.toInt()}%',
                             style: const TextStyle(fontSize: 12),
                           ),
                         );
@@ -136,10 +181,10 @@ class DailyVibrationChart extends StatelessWidget {
     );
   }
 
-  Color _getVibrationColor(double vibration) {
-    if (vibration > 85) {
+    Color _getTemperatureColor(double temperature) {
+    if (temperature > 85) {
       return Colors.red;
-    } else if (vibration > 60) {
+    } else if (temperature > 75) {
       return Colors.orange;
     }
     return Colors.green;
