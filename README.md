@@ -1,6 +1,7 @@
 # asset_monitor
 
-A new Flutter project.
+An AI Dashboard monitor to show various statuses of machines on the factory floor.
+Built using clean architecture, bloc, and hive for local storage
 
 ## Getting Started
 
