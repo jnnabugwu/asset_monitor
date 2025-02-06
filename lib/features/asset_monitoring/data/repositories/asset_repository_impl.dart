@@ -20,7 +20,65 @@ class AssetRepositoryImpl implements AssetRepository {
     required this.networkInfo,
   });
 
+  Future<String> _formatAssetsForAI(List<AssetModel> assets) async {
+    final buffer = StringBuffer();
+    for (var asset in assets) {
+      buffer.writeln("""
+Machine ID: ${asset.id}
+Name: ${asset.name}
+Location: ${asset.location ?? 'Not specified'}
+Status: ${asset.status.name}
+Temperature: ${asset.temperature ?? 'N/A'}°F
+Vibration: ${asset.vibration ?? 'N/A'} Hz
+Oil Level: ${asset.oilLevel ?? 'N/A'}%
+Last Updated: ${asset.lastUpdated?.toIso8601String() ?? 'N/A'}
+-------------------""");
+    }
+    print('----------------');
+    print(buffer.toString());
+    return buffer.toString();
+    
+  }
 
+// New method to cache formatted asset data
+  ResultFuture<void> cacheFormattedAssetData() async {
+    try {
+      final assets = await localDataSource.getAllAssets();
+      final formattedContent = await _formatAssetsForAI(assets);
+      await localDataSource.cacheFileContent(formattedContent);
+      return const Right(null);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(
+        message: e.message,
+        statusCode: e.statusCode
+      ));
+    }
+  }
+
+  // New method to get formatted asset data
+  ResultFuture<String> getFormattedAssetData() async {
+    try {
+      final content = await localDataSource.getFileContent();
+      if (content != null) {
+        return Right(content);
+      } else {
+        // If no cached content exists, create it
+        final result = await cacheFormattedAssetData();
+        return result.fold(
+          (failure) => Left(failure),
+          (_) async {
+            final newContent = await localDataSource.getFileContent();
+            return Right(newContent ?? '');
+          },
+        );
+      }
+    } on CacheException catch (e) {
+      return Left(CacheFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+      ));
+    }
+  }
 
   @override
   ResultFuture<Asset> getAsset(String id) async{

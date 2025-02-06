@@ -9,13 +9,21 @@ abstract class AssetLocalDataSource {
   Future<void> cacheAssets(List<AssetModel> assets);
   Future<void> deleteAsset(String id);
   Future<void> clearAssets();
+
+  Future<void> cacheFileContent(String content);
+  Future<String?> getFileContent();
 }
 
 class AssetLocalDataSourceImpl implements AssetLocalDataSource {
   final Box<AssetModel> assetBox;
+  final Box<String> fileContentBox;
   final String boxName = 'assets';
+  final String fileContentKey = 'asset_file_content';
 
-  AssetLocalDataSourceImpl({required this.assetBox});
+  AssetLocalDataSourceImpl({
+    required this.assetBox,
+    required this.fileContentBox
+  });
 
   // static Future<AssetLocalDataSourceImpl> init() async {
   //   // Register adapter
@@ -67,5 +75,15 @@ class AssetLocalDataSourceImpl implements AssetLocalDataSource {
   @override
   Future<void> clearAssets() async {
     await assetBox.clear();
+  }
+
+  @override
+  Future<void> cacheFileContent(String content) async {
+    await fileContentBox.put(fileContentKey, content);
+  }  
+
+  @override 
+  Future<String?> getFileContent() async {
+    return fileContentBox.get(fileContentKey);
   }
 }

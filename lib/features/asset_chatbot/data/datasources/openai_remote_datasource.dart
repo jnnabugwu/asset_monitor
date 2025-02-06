@@ -138,7 +138,9 @@ class OpenAIRemoteDataSourceImpl implements OpenAIRemoteDataSource {
       );
 
       if (response.statusCode == 200) {
+        print('we got messages');
         final data = json.decode(response.body);
+        print('Raw messages: $data');
         final messages = (data['data'] as List)
             .map((message) => ChatMessageModel.fromJson(message))
             .toList();

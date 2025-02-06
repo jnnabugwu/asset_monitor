@@ -156,6 +156,7 @@ Widget build(BuildContext context) {
                       getTitlesWidget: (value, meta) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
+                          //TODO: figure this out with changing parameters
                           child: Text(
                             '${value.toInt()}%',
                             style: const TextStyle(fontSize: 12),

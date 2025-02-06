@@ -1,4 +1,8 @@
+import 'package:asset_monitor/features/asset_chatbot/presentation/views/widgets/chatbot_bottom_sheet.dart';
+import 'package:asset_monitor/features/asset_chatbot/presentation/views/widgets/chatbot_provider.dart';
 import 'package:asset_monitor/features/asset_monitoring/presentation/asset_bloc/asset_bloc.dart';
+import 'package:asset_monitor/features/asset_monitoring/presentation/views/pages/daily_group_chart.dart';
+import 'package:asset_monitor/features/asset_monitoring/presentation/views/pages/daily_oil_level_chart.dart';
 import 'package:asset_monitor/features/asset_monitoring/presentation/views/pages/daily_temperature_chart.dart';
 import 'package:asset_monitor/features/asset_monitoring/presentation/views/pages/daily_vibration_chart.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +25,17 @@ class DashboardPage extends StatelessWidget {
 
 class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);
+
+  void _showChatbot(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const ChatbotProvider(
+        child: ChatbotBottomSheet(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) { 
@@ -59,11 +74,16 @@ class DashboardView extends StatelessWidget {
                 child: Text('No assets found'),
               );
             }
-            return Column(
-              children: [
-                DailyTemperatureChart(assets: state.assets),
-                DailyVibrationChart(assets: state.assets)
-              ],
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  // DailyTemperatureChart(assets: state.assets),
+                  // DailyVibrationChart(assets: state.assets),
+                  // DailyOilLevelChart(assets: state.assets),
+                  DailyGroupChart(assets: state.assets, 
+                  machineGroup: 'Pump System', parameter: 'temperature')
+                ],
+              ),
             );
           }
 
@@ -71,6 +91,11 @@ class DashboardView extends StatelessWidget {
             child: Text('Something went wrong'),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showChatbot(context),       
+        tooltip: 'Chat with Asset Assistant',
+        child: const Icon(Icons.chat),
       ),
     );
   }
