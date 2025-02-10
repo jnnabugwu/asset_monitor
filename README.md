@@ -3,23 +3,24 @@
 
 An AI Dashboard monitor to show various statuses of machines on the factory floor.
 Built using clean architecture, bloc, and hive for local storage.
-It uses OpenAI as the chatbot
+It uses OpenAI as the ai chatbot
 
 #Demo
 
-
+https://github.com/jnnabugwu/asset_monitor/blob/main/demo/assetdemo.MOV#:~:text=demo-,assetdemo,-.MOV
+# Set up
 ### Generating your Dataset 
 Also to generate your asset files with the IoT asset generator 
 https://github.com/jnnabugwu/asset_monitor/edit/main/README.md#:~:text=bin-,iot_asset_generator,-.dart
 go to the link above in the edit the parameters. A suggestion is to have 4 or less unique assets 7 or less days of data and 1 reading per data so there is less than 50 total readings. This helps the chatbot be at less than 30,000 tokens. 
 
-Things to note to for the Open AI set up:
+Things to note for the Open AI set up:
 
 OpenAI Setup
 File System Setup
 
 Create your assets data file (assets.json)
-Upload to OpenAI with purpose "fine-tune"
+Upload to OpenAI with the purpose "fine-tune"
 Save the file ID (starts with "file-")
 Add file ID to .env: OPEN_AI_FILE_ID=your_file_id
 
@@ -98,3 +99,18 @@ File Structure
    "required": ["query"]
  }
 }
+```
+
+# Key Features 
+
+
+###Asset Monitoring 
+The dashboard displays graphs showing the temperature, vibration, and oil level averages.
+
+Can group by machine type
+
+###Chatbot
+You can ask specific questions about your datasets in the form of a chatbot. 
+
+
+
