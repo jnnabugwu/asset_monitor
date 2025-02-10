@@ -32,24 +32,6 @@ Upload assets.json to vector store
 Save assistant ID (starts with "asst_")
 Add to .env: OPEN_AI_ASSISTANT_ID=your_assistant_id
 
-## Assistant Function Setup
-1. Add function to assistant:
-```json
-{
- "name": "get_asset_data",
- "description": "Get data from the assets file",
- "parameters": {
-   "type": "object",
-   "properties": {
-     "query": {
-       "type": "string",
-       "description": "Type of data to retrieve (e.g., machine count, status, metrics)"
-     }
-   },
-   "required": ["query"]
- }
-}```
-
 
 Put this into the System instructions 
 You are an AI assistant that helps users understand the status of their machines/assets. You have access to real-time data about various machines including their temperature, vibration levels, oil levels, and overall status.
@@ -88,15 +70,21 @@ OPEN_AI_ASSISTANT_ID=asst-xxx
 File Structure
 .env            # Environment variables
 
-## Getting Started
+## Assistant Function Setup
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Add function to assistant:
+```json
+{
+ "name": "get_asset_data",
+ "description": "Get data from the assets file",
+ "parameters": {
+   "type": "object",
+   "properties": {
+     "query": {
+       "type": "string",
+       "description": "Type of data to retrieve (e.g., machine count, status, metrics)"
+     }
+   },
+   "required": ["query"]
+ }
+}```
