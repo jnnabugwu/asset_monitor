@@ -6,8 +6,8 @@ Built using clean architecture, bloc, and hive for local storage.
 It uses OpenAI as the ai chatbot
 
 #Demo
+https://drive.google.com/file/d/1OPOtwS9eOse66xmnCq0dmDoPT4brxiS6/view?usp=sharing
 
-https://github.com/jnnabugwu/asset_monitor/blob/main/demo/assetdemo.MOV#:~:text=demo-,assetdemo,-.MOV
 # Set up
 ### Generating your Dataset 
 Also to generate your asset files with the IoT asset generator 
