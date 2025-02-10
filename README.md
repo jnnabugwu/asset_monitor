@@ -4,7 +4,7 @@ An AI Dashboard monitor to show various statuses of machines on the factory floo
 Built using clean architecture, bloc, and hive for local storage.
 It uses OpenAI as the chatbot
 
-Also to generate your 
+Also to generate your asset files with the iot asset generator
 
 Things to note to for the Open AI set up:
 
