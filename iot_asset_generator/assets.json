@@ -1,0 +1,286 @@
+{
+  "timestamp": "2025-02-10T00:42:07.129655",
+  "assetCount": 4,
+  "assets": [
+    {
+      "id": "b0d714ad-e350-4d21-bfa9-1bd69e9f49f6",
+      "name": "CNC Machine #1506",
+      "location": "Workshop E",
+      "temperature": 82.4,
+      "vibration": 13.2,
+      "oilLevel": 65,
+      "lastUpdated": "2025-02-09T09:48:07.108123",
+      "status": "warning"
+    },
+    {
+      "id": "b0d714ad-e350-4d21-bfa9-1bd69e9f49f6",
+      "name": "CNC Machine #1506",
+      "location": "Workshop E",
+      "temperature": 58.4,
+      "vibration": 67.1,
+      "oilLevel": 60,
+      "lastUpdated": "2025-02-08T23:11:07.108123",
+      "status": "warning"
+    },
+    {
+      "id": "b0d714ad-e350-4d21-bfa9-1bd69e9f49f6",
+      "name": "CNC Machine #1506",
+      "location": "Workshop E",
+      "temperature": 80.9,
+      "vibration": 62.6,
+      "oilLevel": 40,
+      "lastUpdated": "2025-02-07T23:21:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "b0d714ad-e350-4d21-bfa9-1bd69e9f49f6",
+      "name": "CNC Machine #1506",
+      "location": "Workshop E",
+      "temperature": 73.8,
+      "vibration": 42.6,
+      "oilLevel": 79,
+      "lastUpdated": "2025-02-06T18:14:07.108123",
+      "status": "normal"
+    },
+    {
+      "id": "b0d714ad-e350-4d21-bfa9-1bd69e9f49f6",
+      "name": "CNC Machine #1506",
+      "location": "Workshop E",
+      "temperature": 93.4,
+      "vibration": 71.1,
+      "oilLevel": 47,
+      "lastUpdated": "2025-02-05T15:50:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "b0d714ad-e350-4d21-bfa9-1bd69e9f49f6",
+      "name": "CNC Machine #1506",
+      "location": "Workshop E",
+      "temperature": 50.3,
+      "vibration": 75.0,
+      "oilLevel": 81,
+      "lastUpdated": "2025-02-04T18:05:07.108123",
+      "status": "warning"
+    },
+    {
+      "id": "b0d714ad-e350-4d21-bfa9-1bd69e9f49f6",
+      "name": "CNC Machine #1506",
+      "location": "Workshop E",
+      "temperature": 89.0,
+      "vibration": 2.0,
+      "oilLevel": 77,
+      "lastUpdated": "2025-02-03T17:15:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "5cca3735-6fe4-4f84-87eb-fd5b218fc5a1",
+      "name": "Industrial Motor #2772",
+      "location": "Assembly Line B",
+      "temperature": 88.8,
+      "vibration": 0.2,
+      "oilLevel": 43,
+      "lastUpdated": "2025-02-09T05:22:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "5cca3735-6fe4-4f84-87eb-fd5b218fc5a1",
+      "name": "Industrial Motor #2772",
+      "location": "Assembly Line B",
+      "temperature": 94.8,
+      "vibration": 34.5,
+      "oilLevel": 60,
+      "lastUpdated": "2025-02-08T03:38:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "5cca3735-6fe4-4f84-87eb-fd5b218fc5a1",
+      "name": "Industrial Motor #2772",
+      "location": "Assembly Line B",
+      "temperature": 63.9,
+      "vibration": 38.9,
+      "oilLevel": 67,
+      "lastUpdated": "2025-02-07T07:09:07.108123",
+      "status": "warning"
+    },
+    {
+      "id": "5cca3735-6fe4-4f84-87eb-fd5b218fc5a1",
+      "name": "Industrial Motor #2772",
+      "location": "Assembly Line B",
+      "temperature": 67.9,
+      "vibration": 80.7,
+      "oilLevel": 81,
+      "lastUpdated": "2025-02-06T09:05:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "5cca3735-6fe4-4f84-87eb-fd5b218fc5a1",
+      "name": "Industrial Motor #2772",
+      "location": "Assembly Line B",
+      "temperature": 88.5,
+      "vibration": 75.7,
+      "oilLevel": 87,
+      "lastUpdated": "2025-02-05T18:46:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "5cca3735-6fe4-4f84-87eb-fd5b218fc5a1",
+      "name": "Industrial Motor #2772",
+      "location": "Assembly Line B",
+      "temperature": 93.0,
+      "vibration": 36.7,
+      "oilLevel": 74,
+      "lastUpdated": "2025-02-04T09:32:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "5cca3735-6fe4-4f84-87eb-fd5b218fc5a1",
+      "name": "Industrial Motor #2772",
+      "location": "Assembly Line B",
+      "temperature": 84.5,
+      "vibration": 99.6,
+      "oilLevel": 67,
+      "lastUpdated": "2025-02-03T18:56:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "62a9dff6-2784-424c-9707-86d270158335",
+      "name": "Pump System #6246",
+      "location": "Maintenance Bay C",
+      "temperature": 85.7,
+      "vibration": 39.1,
+      "oilLevel": 61,
+      "lastUpdated": "2025-02-09T10:24:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "62a9dff6-2784-424c-9707-86d270158335",
+      "name": "Pump System #6246",
+      "location": "Maintenance Bay C",
+      "temperature": 88.8,
+      "vibration": 53.3,
+      "oilLevel": 92,
+      "lastUpdated": "2025-02-08T14:36:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "62a9dff6-2784-424c-9707-86d270158335",
+      "name": "Pump System #6246",
+      "location": "Maintenance Bay C",
+      "temperature": 51.3,
+      "vibration": 45.7,
+      "oilLevel": 80,
+      "lastUpdated": "2025-02-07T07:46:07.108123",
+      "status": "normal"
+    },
+    {
+      "id": "62a9dff6-2784-424c-9707-86d270158335",
+      "name": "Pump System #6246",
+      "location": "Maintenance Bay C",
+      "temperature": 92.0,
+      "vibration": 48.6,
+      "oilLevel": 52,
+      "lastUpdated": "2025-02-06T03:03:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "62a9dff6-2784-424c-9707-86d270158335",
+      "name": "Pump System #6246",
+      "location": "Maintenance Bay C",
+      "temperature": 68.4,
+      "vibration": 85.5,
+      "oilLevel": 88,
+      "lastUpdated": "2025-02-05T09:18:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "62a9dff6-2784-424c-9707-86d270158335",
+      "name": "Pump System #6246",
+      "location": "Maintenance Bay C",
+      "temperature": 57.5,
+      "vibration": 1.6,
+      "oilLevel": 57,
+      "lastUpdated": "2025-02-04T13:06:07.108123",
+      "status": "warning"
+    },
+    {
+      "id": "62a9dff6-2784-424c-9707-86d270158335",
+      "name": "Pump System #6246",
+      "location": "Maintenance Bay C",
+      "temperature": 65.8,
+      "vibration": 31.2,
+      "oilLevel": 78,
+      "lastUpdated": "2025-02-03T05:53:07.108123",
+      "status": "normal"
+    },
+    {
+      "id": "82c5ee88-7ba2-472f-a840-b857eacbf53e",
+      "name": "CNC Machine #1592",
+      "location": "Workshop E",
+      "temperature": 70.0,
+      "vibration": 46.8,
+      "oilLevel": 80,
+      "lastUpdated": "2025-02-09T08:25:07.108123",
+      "status": "normal"
+    },
+    {
+      "id": "82c5ee88-7ba2-472f-a840-b857eacbf53e",
+      "name": "CNC Machine #1592",
+      "location": "Workshop E",
+      "temperature": 57.1,
+      "vibration": 97.6,
+      "oilLevel": 51,
+      "lastUpdated": "2025-02-08T02:05:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "82c5ee88-7ba2-472f-a840-b857eacbf53e",
+      "name": "CNC Machine #1592",
+      "location": "Workshop E",
+      "temperature": 72.6,
+      "vibration": 89.0,
+      "oilLevel": 77,
+      "lastUpdated": "2025-02-07T10:00:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "82c5ee88-7ba2-472f-a840-b857eacbf53e",
+      "name": "CNC Machine #1592",
+      "location": "Workshop E",
+      "temperature": 69.1,
+      "vibration": 76.6,
+      "oilLevel": 79,
+      "lastUpdated": "2025-02-06T22:16:07.108123",
+      "status": "warning"
+    },
+    {
+      "id": "82c5ee88-7ba2-472f-a840-b857eacbf53e",
+      "name": "CNC Machine #1592",
+      "location": "Workshop E",
+      "temperature": 83.2,
+      "vibration": 99.9,
+      "oilLevel": 73,
+      "lastUpdated": "2025-02-05T07:53:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "82c5ee88-7ba2-472f-a840-b857eacbf53e",
+      "name": "CNC Machine #1592",
+      "location": "Workshop E",
+      "temperature": 64.5,
+      "vibration": 6.8,
+      "oilLevel": 41,
+      "lastUpdated": "2025-02-04T15:39:07.108123",
+      "status": "critical"
+    },
+    {
+      "id": "82c5ee88-7ba2-472f-a840-b857eacbf53e",
+      "name": "CNC Machine #1592",
+      "location": "Workshop E",
+      "temperature": 55.7,
+      "vibration": 17.4,
+      "oilLevel": 66,
+      "lastUpdated": "2025-02-03T16:59:07.108123",
+      "status": "warning"
+    }
+  ]
+}
