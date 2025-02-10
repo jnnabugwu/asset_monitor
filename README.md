@@ -1,10 +1,17 @@
+
 # asset_monitor
 
 An AI Dashboard monitor to show various statuses of machines on the factory floor.
 Built using clean architecture, bloc, and hive for local storage.
 It uses OpenAI as the chatbot
 
-Also to generate your asset files with the iot asset generator
+#Demo
+
+
+### Generating your Dataset 
+Also to generate your asset files with the IoT asset generator 
+https://github.com/jnnabugwu/asset_monitor/edit/main/README.md#:~:text=bin-,iot_asset_generator,-.dart
+go to the link above in the edit the parameters. A suggestion is to have 4 or less unique assets 7 or less days of data and 1 reading per data so there is less than 50 total readings. This helps the chatbot be at less than 30,000 tokens. 
 
 Things to note to for the Open AI set up:
 
@@ -16,7 +23,7 @@ Upload to OpenAI with purpose "fine-tune"
 Save the file ID (starts with "file-")
 Add file ID to .env: OPEN_AI_FILE_ID=your_file_id
 
-Assistant Setup
+## Assistant Setup
 
 Create new assistant
 Configure:
@@ -70,6 +77,9 @@ OPEN_AI_ASSISTANT_ID=asst-xxx
 File Structure
 .env            # Environment variables
 
+
+
+
 ## Assistant Function Setup
 
 1. Add function to assistant:
@@ -87,4 +97,4 @@ File Structure
    },
    "required": ["query"]
  }
-}```
+}
