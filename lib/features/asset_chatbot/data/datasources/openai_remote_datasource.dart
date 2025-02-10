@@ -100,14 +100,23 @@ class OpenAIRemoteDataSourceImpl implements OpenAIRemoteDataSource {
 
   Future<void> _waitForRunCompletion(String threadId, String runId) async {
     const maxAttempts = 30; // Maximum number of polling attempts
-    const delaySeconds = 1; // Delay between polling attempts
+    const delaySeconds = 2; // Delay between polling attempts
 
     for (var i = 0; i < maxAttempts; i++) {
       final response = await client.get(
         Uri.parse('$baseUrl/threads/$threadId/runs/$runId'),
         headers: _headers,
       );
-
+      if(i == 1){
+        print(response.body);
+        print('--------------------');
+        print(json.decode(response.body)['status']);
+      }
+      if(i == 29){
+        print(response.body);
+        print('--------------------');
+        print(json.decode(response.body)['status']);        
+      }
       if (response.statusCode != 200) {
         throw ServerException(
           message: 'Failed to check run status: ${response.body}',
@@ -117,7 +126,27 @@ class OpenAIRemoteDataSourceImpl implements OpenAIRemoteDataSource {
       final data = json.decode(response.body);
       final status = data['status'];
 
-      if (status == 'completed') {
+      if (data['status'] == 'requires_action') {
+        final toolCalls = data['required_action']['submit_tool_outputs']['tool_calls'] as List;
+        
+        List<Map<String, dynamic>> toolOutputs = [];
+        for (var call in toolCalls) {
+          if (call['function']['name'] == 'get_asset_data') {
+            // Submit empty result since file is already accessible
+            toolOutputs.add({
+              'tool_call_id': call['id'],
+              'output': '{"success": true}'
+            });
+          }
+        }
+        // Submit tool outputs
+        await client.post(
+          Uri.parse('$baseUrl/threads/$threadId/runs/$runId/submit_tool_outputs'),
+          headers: _headers,
+          body: json.encode({'tool_outputs': toolOutputs}),
+        );
+    }
+        if (status == 'completed') {
         return;
       } else if (status == 'failed' || status == 'cancelled') {
         throw ServerException(message: 'Run $status: ${data['last_error']}');

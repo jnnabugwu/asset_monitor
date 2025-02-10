@@ -1,4 +1,5 @@
 
+import 'package:asset_monitor/features/asset_monitoring/data/datasources/asset_openai_datasource.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -44,6 +45,17 @@ Future<void> init() async {
 
 Future<void> initAssetMonitoring() async {
   //Features - Asset Monitoring
+
+  final fileId = getEnvOrThrow('OPEN_AI_FILE_ID');
+  final apiKey = getEnvOrThrow('OPEN_AI_API_KEY');
+  
+  sl.registerLazySingleton<AssetOpenAIRemoteDataSource>(
+    () => AssetOpenAIRemoteDataSourceImpl(
+      client: sl(),
+      fileId: fileId,
+      openAIKey: apiKey,
+    ),
+  );
   
   // Environment variables
   sl.registerLazySingleton(() => dotenv.env['MQTT_ENDPOINT'] ?? '');
@@ -79,6 +91,7 @@ Future<void> initAssetMonitoring() async {
   // Repository
   sl.registerLazySingleton<AssetRepository>(
     () => AssetRepositoryImpl(
+      openAIRemoteDataSource: sl(),
       localDataSource: sl(),
       remoteDataSource: sl(),
       networkInfo: sl(),

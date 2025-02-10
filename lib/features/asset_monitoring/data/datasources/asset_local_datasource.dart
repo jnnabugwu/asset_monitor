@@ -61,10 +61,13 @@ class AssetLocalDataSourceImpl implements AssetLocalDataSource {
 
   @override
   Future<void> cacheAssets(List<AssetModel> assets) async {
-    for (var asset in assets) {
-      final compositeKey = '${asset.id}_${asset.lastUpdated?.millisecondsSinceEpoch}';
-      await assetBox.put(compositeKey, asset);
-    }
+
+   // Clear existing assets first
+    await assetBox.clear();   
+
+  for (var asset in assets) {
+    await assetBox.put(asset.id, asset);
+  }
   }
 
   @override

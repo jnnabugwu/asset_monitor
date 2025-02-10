@@ -3,6 +3,7 @@ import 'package:asset_monitor/core/errors/failures.dart';
 import 'package:asset_monitor/core/network/network_info.dart';
 import 'package:asset_monitor/core/utils/typedef.dart';
 import 'package:asset_monitor/features/asset_monitoring/data/datasources/asset_local_datasource.dart';
+import 'package:asset_monitor/features/asset_monitoring/data/datasources/asset_openai_datasource.dart';
 import 'package:asset_monitor/features/asset_monitoring/data/datasources/asset_remote_datasource.dart';
 import 'package:asset_monitor/features/asset_monitoring/data/models/asset_model.dart';
 import 'package:asset_monitor/features/asset_monitoring/domain/entities/asset.dart';
@@ -10,11 +11,13 @@ import 'package:asset_monitor/features/asset_monitoring/domain/repositories/asse
 import 'package:dartz/dartz.dart';
 
 class AssetRepositoryImpl implements AssetRepository {
+  final AssetOpenAIRemoteDataSource openAIRemoteDataSource;
   final AssetLocalDataSource localDataSource;
   final AssetRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
 
   AssetRepositoryImpl({
+    required this.openAIRemoteDataSource,
     required this.localDataSource,
     required this.remoteDataSource,
     required this.networkInfo,
@@ -112,20 +115,39 @@ Last Updated: ${asset.lastUpdated?.toIso8601String() ?? 'N/A'}
   //   }
   // }
   
-   @override
-   ResultFuture<List<Asset>> getAssets() async{
+ @override
+  ResultFuture<List<Asset>> getAssets() async {
+    final areWeConnected = await networkInfo.isConnected;
     try {
-      final localAssets = await localDataSource.getAllAssets();
-      print('Length of assets: ${localAssets.length}');
-      return Right(localAssets);
-    } on CacheException catch (e) {
-      return Left(CacheFailure(
-        message: e.message
-      , statusCode: e.statusCode)
-      );
-      
+      if (areWeConnected) {
+        print('getting assets in repo');
+        final openAIAssets = await openAIRemoteDataSource.getAssets();
+        print('got assets from data source');
+        await localDataSource.cacheAssets(openAIAssets);
+        final localAssets = await localDataSource.getAllAssets();
+        print('localAssets: ${localAssets.length}');
+        print(openAIAssets);
+        return Right(openAIAssets);
+      } else {
+        print('getting assets from getallassets');
+        final localAssets = await localDataSource.getAllAssets();
+        return Right(localAssets);
+      }
+    } on ServerException catch (e){
+      try {
+         print('getting assets from get all assets 2');
+         print(areWeConnected);
+         print(ServerException(message: e.message, statusCode: e.statusCode));
+        final localAssets = await localDataSource.getAllAssets();
+        return Right(localAssets);
+      } on CacheException catch (e) {
+        return Left(CacheFailure(
+          message: e.message,
+          statusCode: e.statusCode,
+        ));
+      }
     }
-   }
+  }
 
   // ResultFuture<List<Asset>> getAssets() async {
   //   try {

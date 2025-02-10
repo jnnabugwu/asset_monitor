@@ -91,6 +91,7 @@ Widget build(BuildContext context) {
     final averages = calculateDailyAverages(assets,parameter);
     final days = averages.keys.toList();
     final String title = parameter;
+    final axisParams = _getAxisParameters(parameter);
 
     return Column(
       children: [
@@ -111,7 +112,7 @@ Widget build(BuildContext context) {
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceAround,
-                maxY: 100, // Maximum vibration
+                maxY: axisParams['maxY'], // Maximum vibration
                 minY: 0,   // Minimum vibration
                 barGroups: List.generate(
                   days.length,
@@ -158,7 +159,7 @@ Widget build(BuildContext context) {
                           padding: const EdgeInsets.all(8.0),
                           //TODO: figure this out with changing parameters
                           child: Text(
-                            '${value.toInt()}%',
+                            '${value.toInt()}${axisParams['unit']}',
                             style: const TextStyle(fontSize: 12),
                           ),
                         );
@@ -190,4 +191,33 @@ Widget build(BuildContext context) {
     }
     return Colors.green;
   }
+
+  Map<String, dynamic> _getAxisParameters(String parameter) {
+  switch (parameter) {
+    case 'temperature':
+      return {
+        'maxY': 110.0,  // Max temperature in degrees
+        'unit': '°F',
+        'interval': 30.0
+      };
+    case 'vibration':
+      return {
+        'maxY': 100.0,  // Max vibration percentage
+        'unit': '%',
+        'interval': 20.0
+      };
+    case 'oilLevel':
+      return {
+        'maxY': 100.0,  // Max oil level percentage
+        'unit': '%',
+        'interval': 20.0
+      };
+    default:
+      return {
+        'maxY': 100.0,
+        'unit': '',
+        'interval': 20.0
+      };
+  }
+}
 }

@@ -77,11 +77,13 @@ class DashboardView extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  // DailyTemperatureChart(assets: state.assets),
-                  // DailyVibrationChart(assets: state.assets),
-                  // DailyOilLevelChart(assets: state.assets),
+                  DailyTemperatureChart(assets: state.assets),
+                  DailyVibrationChart(assets: state.assets),
+                  DailyOilLevelChart(assets: state.assets),
                   DailyGroupChart(assets: state.assets, 
-                  machineGroup: 'Pump System', parameter: 'temperature')
+                  machineGroup: 'Pump System', parameter: 'temperature'),
+                  DailyGroupChart(assets: state.assets, 
+                  machineGroup: 'Pump System', parameter: 'vibration'),                  
                 ],
               ),
             );
