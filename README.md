@@ -104,13 +104,21 @@ File Structure
 # Key Features 
 
 
-###Asset Monitoring 
+### Asset Monitoring 
 The dashboard displays graphs showing the temperature, vibration, and oil level averages.
 
 Can group by machine type
 
-###Chatbot
+### Chatbot
 You can ask specific questions about your datasets in the form of a chatbot. 
+
+# Future Features 
+
+### Asset Monitoring 
+Give the ability to look at all individual machines in a grid-type format
+
+
+
 
 
 
